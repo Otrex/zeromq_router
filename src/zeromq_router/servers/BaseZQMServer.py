@@ -58,6 +58,12 @@ class BaseZMQServer:
   def _send_response(self, response: dict):
     self.socket.send_string(json.dumps(response))
 
+  def response(self, data: dict, status: int = 200):
+    return self._send_response({
+      "data": data,
+      "status": status
+    });
+
   def _handle_exception(self, e: Exception):
     if self.error_handler:
       self.error_handler(e, self)
